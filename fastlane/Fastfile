@@ -19,24 +19,40 @@ platform :ios do
 
   desc "Runs all the tests"
   lane :test do
+    # Run Swift tests 
+    # https://docs.fastlane.tools/getting-started/ios/running-tests/
     run_tests(scheme: "HelloiOSWorld")
   end
 
   desc "Build the app"
   lane :build do
+    # Assign app
+    # https://docs.fastlane.tools/codesigning/getting-started/#using-cert-and-sigh
     get_certificates           # invokes cert
     get_provisioning_profile   # invokes sigh
+    # As best practice
+    # Increment build number.
+    # https://docs.fastlane.tools/getting-started/ios/beta-deployment/#best-practices
+    # Requires XCodeProj configuration
+    # https://developer.apple.com/library/archive/qa/qa1827/_index.html
+    increment_build_number
     build_app
   end
 
   desc "Build and Run for Crashlytics"
   lane :fabric do
+    # Upload app to Fabric Beta (Crashlytics)
+    # https://docs.fastlane.tools/getting-started/ios/beta-deployment/#beta-testing-services
+    # Should be configured with Fabric and Crashlytics Pods
+    # Install instructions at
+    # https://fabric.io/kits/ios/crashlytics/install
     crashlytics
   end
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    build_app(scheme: "HelloiOSWorld")
+    # Upload app to Test Flight
+    # https://docs.fastlane.tools/getting-started/ios/beta-deployment/#uploading-your-app
     upload_to_testflight
   end
 end
