@@ -39,7 +39,7 @@ platform :ios do
     build_app
   end
 
-  desc "Build and Run for Crashlytics"
+  desc "Upload to Crashlytics"
   lane :fabric do
     # Upload app to Fabric Beta (Crashlytics)
     # https://docs.fastlane.tools/getting-started/ios/beta-deployment/#beta-testing-services
